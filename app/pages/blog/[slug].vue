@@ -21,29 +21,32 @@ useSeoMeta({
     :ui="{
       root: 'bg-transparent',
       container: 'max-w-3xl',
+      header: 'items-start text-left',
       title: 'text-zinc-50 font-medium tracking-tight',
       description: 'text-zinc-400 font-mono text-xs'
     }"
   >
-    <div class="post-top-nav">
-      <UButton
-        to="/blog"
-        color="neutral"
-        variant="ghost"
-        size="xs"
-        icon="i-lucide-arrow-left"
-        label="All posts"
-      />
+    <template #headline>
+      <div class="post-top-nav">
+        <UButton
+          to="/blog"
+          color="neutral"
+          variant="ghost"
+          size="xs"
+          icon="i-lucide-arrow-left"
+          label="All posts"
+        />
 
-      <UButton
-        to="/"
-        color="neutral"
-        variant="ghost"
-        size="xs"
-        icon="i-lucide-home"
-        label="Home"
-      />
-    </div>
+        <UButton
+          to="/"
+          color="neutral"
+          variant="ghost"
+          size="xs"
+          icon="i-lucide-home"
+          label="Home"
+        />
+      </div>
+    </template>
 
     <article class="post-article">
       <UBadge
@@ -73,27 +76,30 @@ useSeoMeta({
     :ui="{
       root: 'bg-transparent',
       container: 'max-w-3xl',
+      header: 'items-start text-left',
       title: 'text-zinc-50',
       description: 'text-zinc-400'
     }"
   >
-    <div class="post-top-nav">
-      <UButton
-        to="/blog"
-        icon="i-lucide-arrow-left"
-        color="neutral"
-        variant="solid"
-        label="All posts"
-      />
+    <template #headline>
+      <div class="post-top-nav">
+        <UButton
+          to="/blog"
+          icon="i-lucide-arrow-left"
+          color="neutral"
+          variant="solid"
+          label="All posts"
+        />
 
-      <UButton
-        to="/"
-        icon="i-lucide-home"
-        color="neutral"
-        variant="ghost"
-        label="Home"
-      />
-    </div>
+        <UButton
+          to="/"
+          icon="i-lucide-home"
+          color="neutral"
+          variant="ghost"
+          label="Home"
+        />
+      </div>
+    </template>
   </UPageSection>
 </template>
 
@@ -101,7 +107,7 @@ useSeoMeta({
 @reference "~/assets/css/main.css";
 
 .post-top-nav {
-  @apply flex items-center gap-2 mb-6;
+  @apply flex items-center gap-2;
 }
 
 .post-article {

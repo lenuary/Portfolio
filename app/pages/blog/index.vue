@@ -14,19 +14,31 @@ useSeoMeta({
     :ui="{
       root: 'bg-transparent',
       container: 'max-w-3xl',
+      header: 'items-start text-left',
       title: 'text-zinc-50 font-medium tracking-tight',
       description: 'text-zinc-400'
     }"
   >
-    <div class="blog-top-actions">
-      <UButton
-        to="/#blog"
-        color="neutral"
-        variant="ghost"
-        icon="i-lucide-arrow-left"
-        label="Back to home"
-      />
-    </div>
+    <template #headline>
+      <div class="blog-top-actions">
+        <UButton
+          to="/#blog"
+          color="neutral"
+          variant="ghost"
+          size="xs"
+          icon="i-lucide-arrow-left"
+          label="Blog section"
+        />
+        <UButton
+          to="/"
+          color="neutral"
+          variant="ghost"
+          size="xs"
+          icon="i-lucide-home"
+          label="Home"
+        />
+      </div>
+    </template>
 
     <div class="articles-list">
       <article
@@ -69,11 +81,7 @@ useSeoMeta({
 @reference "~/assets/css/main.css";
 
 .blog-top-actions {
-  @apply mb-6;
-}
-
-.blog-notice {
-  @apply mb-8 border border-zinc-800 bg-zinc-950/70;
+  @apply flex items-center gap-2;
 }
 
 .articles-list {
