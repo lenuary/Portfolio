@@ -1,75 +1,63 @@
-# Nuxt Minimal Starter
+# Lenuary — Personal Portfolio
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+A modern, minimalist portfolio showcasing my projects, technical skills, and approach to web development.
 
-## Setup
+**Status:** In Development
 
-Make sure to install dependencies:
+---
 
-```bash
-# npm
-npm install
+## About
 
-# pnpm
-pnpm install
+I'm an aspiring web developer focused on building modern web applications and interactive digital experiences.
 
-# yarn
-yarn install
+I enjoy working with modern frontend technologies, exploring creative approaches to interface design, and developing projects that combine functionality with attention to detail.
 
-# bun
-bun install
-```
+This portfolio serves as a collection of my work, experiments, and ongoing development.
 
-## Development Server
+## Tech Stack
 
-Start the development server on `http://localhost:3000`:
+| Category | Technologies |
+|---|---|
+| Framework | Nuxt 3 / Vue 3 |
+| Language | TypeScript / JavaScript |
+| Styling | Tailwind CSS |
+| UI Components | Nuxt UI |
+| 3D & Animation | Three.js / Spline |
+| Tools | Git / GitHub / VS Code |
+| Deployment | Vercel |
 
-```bash
-# npm
-npm run dev
+## Featured Projects
 
-# pnpm
-pnpm dev
+A selection of personal projects, experiments, and applications.
 
-# yarn
-yarn dev
+- **Interactive Exhibition Infokiosk & CMS** — An interactive exhibition kiosk with a content management system.
+- **3D Weather Experience** — An experimental weather application featuring interactive 3D visualizations.
+- **Personal Portfolio** — A modern portfolio focused on minimal design, subtle animations, and spatial elements.
 
-# bun
-bun run dev
-```
+## Design Philosophy
 
-## Production
+My approach to development combines:
 
-Build the application for production:
+- **Minimalism** — Clean interfaces with intentional visual hierarchy.
+- **Functionality** — Practical solutions designed around user needs.
+- **Interaction** — Subtle animations and meaningful micro-interactions.
+- **Experimentation** — Exploring 3D environments and modern web technologies.
 
-```bash
-# npm
-npm run build
+## Currently Exploring
 
-# pnpm
-pnpm build
+- Advanced Nuxt and Vue development
+- Three.js and interactive 3D experiences
+- UI/UX design and interface architecture
+- Web performance and accessibility
+- Modern frontend development practices
 
-# yarn
-yarn build
+## Connect
 
-# bun
-bun run build
-```
+- **GitHub:** [@Lenuary](https://github.com/Lenuary)
+- **Portfolio:** [lenuary.dev](https://lenuary.dev)
 
-Locally preview production build:
+---
 
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+<p align="center">
+  Designed and developed by <strong>Lenuary</strong>
+</p>
