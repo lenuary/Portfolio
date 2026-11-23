@@ -1,10 +1,11 @@
 <script setup lang="ts">
-const { projects } = useProjects()
+const { projects } = useProjects();
 
 useSeoMeta({
-  title: 'Projects',
-  description: 'All web applications, scheduling tools, and interactive 3D projects.'
-})
+  title: "Projects",
+  description:
+    "All web applications, scheduling tools, and interactive 3D projects.",
+});
 </script>
 
 <template>
@@ -14,20 +15,31 @@ useSeoMeta({
     :ui="{
       root: 'bg-transparent',
       container: 'max-w-5xl',
+      header: 'items-start text-left',
       title: 'text-zinc-50 font-medium tracking-tight',
-      description: 'text-zinc-400'
+      description: 'text-zinc-400',
     }"
   >
-    <div class="projects-top-nav">
-      <UButton
-        to="/"
-        color="neutral"
-        variant="ghost"
-        size="xs"
-        icon="i-lucide-home"
-        label="Home"
-      />
-    </div>
+    <template #headline>
+      <div class="projects-top-nav">
+        <UButton
+          to="/#projects"
+          color="neutral"
+          variant="ghost"
+          size="xs"
+          icon="i-lucide-arrow-left"
+          label="Projects section"
+        />
+        <UButton
+          to="/"
+          color="neutral"
+          variant="ghost"
+          size="xs"
+          icon="i-lucide-home"
+          label="Home"
+        />
+      </div>
+    </template>
 
     <UPageGrid class="projects-index-grid">
       <UPageCard
@@ -35,14 +47,13 @@ useSeoMeta({
         :key="project.slug"
         :title="project.title"
         :description="project.summary"
-        :icon="project.icon"
         :to="`/projects/${project.slug}`"
         variant="outline"
         :ui="{
           root: 'bg-zinc-950/75 border-zinc-800/80 hover:border-zinc-600 transition-colors backdrop-blur-md rounded-xl',
           leadingIcon: 'text-zinc-300',
           title: 'text-zinc-100 font-medium',
-          description: 'text-zinc-400 text-sm leading-relaxed'
+          description: 'text-zinc-400 text-sm leading-relaxed',
         }"
       >
         <template #footer>
@@ -67,7 +78,7 @@ useSeoMeta({
 @reference "~/assets/css/main.css";
 
 .projects-top-nav {
-  @apply flex items-center gap-2 mb-6;
+  @apply flex items-center gap-2;
 }
 
 .projects-index-grid {
