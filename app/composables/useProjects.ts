@@ -1,57 +1,34 @@
+export interface ProjectSection {
+  heading: string
+  paragraphs: readonly string[]
+}
+
 export interface ProjectItem {
   slug: string
+  order: number
   title: string
   summary: string
   details: string
-  icon: string
   image: string
   cardBg: string
   stack: readonly string[]
-  githubUrl?: string
+  role?: string
+  timeline?: string
+  status?: string
   liveUrl?: string
+  githubUrl?: string
+  sections?: readonly ProjectSection[]
   highlights: readonly string[]
 }
 
-const PROJECTS: readonly ProjectItem[] = [
-{
-  slug: 'Project1',
-  title: 'Lorem Ipsum Dolor Sit Amet',
-  summary:
-    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vitae justo nec lorem tincidunt consequat.',
-  details:
-    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Integer posuere erat a ante venenatis dapibus posuere velit aliquet.',
-  icon: 'i-lucide-monitor',
-  image:
-    'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&auto=format&fit=crop&q=80',
-  cardBg: 'bg-zinc-900 border border-zinc-800',
-  stack: ['Vue 3'],
-  githubUrl: 'https://github.com/lenuary',
-  highlights: [
-    'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-    'Integer posuere erat a ante venenatis dapibus posuere velit aliquet',
-    'Sed ut perspiciatis unde omnis iste natus error sit voluptatem'
-  ]
-},
-{
-  slug: 'Project2',
-  title: 'Lorem Ipsum Dolor Sit Amet',
-  summary:
-    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vitae justo nec lorem tincidunt consequat.',
-  details:
-    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Integer posuere erat a ante venenatis dapibus posuere velit aliquet.',
-  icon: 'i-lucide-monitor',
-  image:
-    'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&auto=format&fit=crop&q=80',
-  cardBg: 'bg-zinc-900 border border-zinc-800',
-  stack: ['Vue 3'],
-  githubUrl: 'https://github.com/lenuary',
-  highlights: [
-    'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-    'Integer posuere erat a ante venenatis dapibus posuere velit aliquet',
-    'Sed ut perspiciatis unde omnis iste natus error sit voluptatem'
-  ]
-}
-]
+const projectModules = import.meta.glob<{ project: ProjectItem }>(
+  '~/data/projects/*.ts',
+  { eager: true }
+)
+
+const PROJECTS: readonly ProjectItem[] = Object.values(projectModules)
+  .map((mod) => mod.project)
+  .sort((a, b) => a.order - b.order)
 
 export function useProjects() {
   const getProjectBySlug = (slug: string | undefined): ProjectItem | undefined =>
