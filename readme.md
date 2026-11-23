@@ -1,75 +1,29 @@
-# Nuxt Minimal Starter
+# Developer Portfolio
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+Minimalist, dark monochrome developer portfolio featuring interactive project case studies and a technical blog.
 
-## Setup
+## Tech Stack
 
-Make sure to install dependencies:
+- **Framework:** Nuxt / Vue 3
+- **Language:** TypeScript
+- **UI Library:** Nuxt UI
+- **Styling:** Tailwind CSS
+
+## Features
+
+- Responsive dark monochrome layout
+- Modular project case studies with sticky sidebar navigation
+- Technical blog with article views and tag badges
+- SEO-ready metadata configuration
+
+## Getting Started
 
 ```bash
-# npm
+# Install dependencies
 npm install
 
-# pnpm
-pnpm install
-
-# yarn
-yarn install
-
-# bun
-bun install
-```
-
-## Development Server
-
-Start the development server on `http://localhost:3000`:
-
-```bash
-# npm
+# Start development server
 npm run dev
 
-# pnpm
-pnpm dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
-```
-
-## Production
-
-Build the application for production:
-
-```bash
-# npm
+# Build for production
 npm run build
-
-# pnpm
-pnpm build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
