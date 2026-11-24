@@ -6,17 +6,20 @@ interface ContactFormState {
   name: string
   email: string
   message: string
+  website: string
 }
-
-const CONTACT_EMAIL = 'contact@lenuary.dev'
 
 const state = reactive<ContactFormState>({
   name: '',
   email: '',
-  message: ''
+  message: '',
+  website: '' // honeypot
 })
 
+const startedAt = ref(Date.now())
+const isSubmitting = ref(false)
 const submitted = ref(false)
+const errorMessage = ref('')
 
 const validate = (formState: Partial<ContactFormState>): FormError[] => {
   const errors: FormError[] = []
@@ -33,22 +36,38 @@ const validate = (formState: Partial<ContactFormState>): FormError[] => {
 
   if (!formState.message?.trim()) {
     errors.push({ name: 'message', message: 'Message cannot be empty.' })
+  } else if (formState.message.trim().length < 10) {
+    errors.push({ name: 'message', message: 'Message must be at least 10 characters.' })
   }
 
   return errors
 }
 
-const onSubmit = (event: FormSubmitEvent<ContactFormState>) => {
-  const { name, email, message } = event.data
-  const subject = encodeURIComponent(`Portfolio inquiry from ${name.trim()}`)
-  const body = encodeURIComponent(
-    `Name: ${name.trim()}\nEmail: ${email.trim()}\n\n${message.trim()}`
-  )
+const onSubmit = async (event: FormSubmitEvent<ContactFormState>) => {
+  isSubmitting.value = true
+  submitted.value = false
+  errorMessage.value = ''
 
-  submitted.value = true
+  try {
+    await $fetch('/api/contact', {
+      method: 'POST',
+      body: {
+        ...event.data,
+        startedAt: startedAt.value
+      }
+    })
 
-  if (import.meta.client) {
-    window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`
+    submitted.value = true
+    state.name = ''
+    state.email = ''
+    state.message = ''
+    state.website = ''
+    startedAt.value = Date.now()
+  } catch (err: any) {
+    errorMessage.value =
+      err?.data?.statusMessage || 'Something went wrong. Please try again later.'
+  } finally {
+    isSubmitting.value = false
   }
 }
 </script>
@@ -75,9 +94,20 @@ const onSubmit = (event: FormSubmitEvent<ContactFormState>) => {
       <UForm
         :state="state"
         :validate="validate"
-        class="contact-form"
+        class="flex flex-col gap-4"
         @submit="onSubmit"
       >
+        <!-- Ukryte pole honeypot dla botów -->
+        <input
+          v-model="state.website"
+          type="text"
+          name="website"
+          tabindex="-1"
+          autocomplete="off"
+          aria-hidden="true"
+          class="hidden"
+        />
+
         <UFormField label="Name" name="name" required>
           <UInput
             v-model="state.name"
@@ -115,17 +145,28 @@ const onSubmit = (event: FormSubmitEvent<ContactFormState>) => {
           color="neutral"
           variant="subtle"
           icon="i-lucide-check"
-          title="Message ready to send"
-          description="Your default email client has been opened with the pre-filled message."
+          title="Message sent"
+          description="Thanks for reaching out! I will get back to you as soon as possible."
         />
 
-        <div class="contact-submit">
+        <UAlert
+          v-if="errorMessage"
+          color="error"
+          variant="subtle"
+          icon="i-lucide-alert-circle"
+          title="Could not send message"
+          :description="errorMessage"
+        />
+
+        <div class="flex justify-end pt-1">
           <UButton
             type="submit"
             color="neutral"
             variant="solid"
             trailing-icon="i-lucide-send"
             label="Send message"
+            :loading="isSubmitting"
+            :disabled="isSubmitting"
             class="cursor-pointer"
           />
         </div>
@@ -133,15 +174,3 @@ const onSubmit = (event: FormSubmitEvent<ContactFormState>) => {
     </UPageCard>
   </UPageSection>
 </template>
-
-<style scoped>
-@reference "~/assets/css/main.css";
-
-.contact-form {
-  @apply flex flex-col gap-4;
-}
-
-.contact-submit {
-  @apply flex justify-end pt-1;
-}
-</style>

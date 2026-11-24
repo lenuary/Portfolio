@@ -21,7 +21,7 @@ useSeoMeta({
     }"
   >
     <template #headline>
-      <div class="projects-top-nav">
+      <div class="flex items-center gap-2">
         <UButton
           to="/#projects"
           color="neutral"
@@ -41,7 +41,7 @@ useSeoMeta({
       </div>
     </template>
 
-    <UPageGrid class="projects-index-grid">
+    <UPageGrid class="grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
       <UPageCard
         v-for="project in projects"
         :key="project.slug"
@@ -57,7 +57,7 @@ useSeoMeta({
         }"
       >
         <template #footer>
-          <div class="project-card-stack">
+          <div class="flex flex-wrap gap-1.5">
             <UBadge
               v-for="tech in project.stack"
               :key="tech"
@@ -65,7 +65,7 @@ useSeoMeta({
               color="neutral"
               variant="outline"
               size="xs"
-              class="project-stack-badge"
+              class="border-zinc-800 bg-zinc-900/70 font-normal text-zinc-300"
             />
           </div>
         </template>
@@ -73,23 +73,3 @@ useSeoMeta({
     </UPageGrid>
   </UPageSection>
 </template>
-
-<style scoped>
-@reference "~/assets/css/main.css";
-
-.projects-top-nav {
-  @apply flex items-center gap-2;
-}
-
-.projects-index-grid {
-  @apply grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5;
-}
-
-.project-card-stack {
-  @apply flex flex-wrap gap-1.5;
-}
-
-.project-stack-badge {
-  @apply border-zinc-800 bg-zinc-900/70 text-zinc-300 font-normal;
-}
-</style>

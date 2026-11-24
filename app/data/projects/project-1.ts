@@ -1,41 +1,41 @@
-import type { ProjectItem } from '~/composables/useProjects'
+import type { ProjectItem } from "~/composables/useProjects";
 
 export const project: ProjectItem = {
-  slug: 'project-1',
+  slug: "kocie-wzgorze",
   order: 1,
-  title: 'Project 01',
+  title: "Kocie Wzgórze",
   summary:
-    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+    "A modern, visually driven website for a cat shelter, designed to connect rescued cats with people looking for a new companion.",
   details:
-    'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-  role: 'Lead Developer',
-  timeline: '2026',
-  status: 'In development',
-  image:
-    'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1200&auto=format&fit=crop&q=80',
-  cardBg: 'bg-zinc-900 border border-zinc-800',
-  stack: ['Vue 3', 'Nuxt', 'TypeScript', 'Tailwind CSS'],
-  liveUrl: 'https://www.lipsum.com/',
-  githubUrl: 'https://www.lipsum.com/',
+    "A responsive shelter website focused on cat adoption, presenting animals waiting for a home and encouraging visitors to support the shelter through volunteering, donations and temporary foster care.",
+  role: "Web Developer",
+  timeline: "2026",
+  status: "Completed",
+  image: "/project-1.png",
+  cardBg: "bg-zinc-900 border border-zinc-800",
+  stack: ["HTML5", "CSS3", "JavaScript", "Responsive Design"],
+  liveUrl: "https://schronisko-three.vercel.app/",
+  githubUrl: "https://github.com/lenuary/Schronisko",
   sections: [
     {
-      heading: 'Overview',
+      heading: "Overview",
       paragraphs: [
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-        'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
-      ]
+        "Kocie Wzgórze is a website concept for a cat shelter, created to make animal adoption more approachable and engaging. The website introduces cats looking for a home through individual profiles, descriptions and personality traits.",
+        "The project combines a warm visual identity with a clear content structure, helping visitors explore available cats and discover different ways to support the shelter.",
+      ],
     },
     {
-      heading: 'Architecture & Implementation',
+      heading: "Design & Implementation",
       paragraphs: [
-        'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.',
-        'Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.'
-      ]
-    }
+        "The interface was designed around a welcoming, editorial-inspired aesthetic, using carefully arranged typography, imagery and spacious layouts to create an emotional connection with visitors.",
+        "The website includes dedicated sections for cat adoption, volunteering, donations, temporary foster care and shelter information. The layout is designed to provide an intuitive browsing experience across different screen sizes.",
+      ],
+    },
   ],
   highlights: [
-    'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-    'Ut enim ad minim veniam, quis nostrud exercitation',
-    'Duis aute irure dolor in reprehenderit in voluptate'
-  ]
-}
+    "Dedicated cat profiles with descriptions and personality traits",
+    "Adoption-focused design and intuitive navigation",
+    "Dedicated sections for volunteering, donations and foster care",
+    "Responsive layout with a consistent visual identity",
+  ],
+};

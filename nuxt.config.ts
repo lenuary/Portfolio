@@ -4,4 +4,7 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
     modules: ['@nuxt/ui'],
       css: ['~/assets/css/main.css'],
+      runtimeConfig: {
+        resendApiKey: import.meta.env.RESEND_API_KEY
+      },
 })
