@@ -1,16 +1,17 @@
 <script setup lang="ts">
-const route = useRoute()
-const { getPostBySlug } = useBlog()
+const route = useRoute();
+const { getPostBySlug } = useBlog();
 
 const slug = computed(() =>
-  Array.isArray(route.params.slug) ? route.params.slug[0] : route.params.slug
-)
-const post = computed(() => getPostBySlug(slug.value))
+  Array.isArray(route.params.slug) ? route.params.slug[0] : route.params.slug,
+);
+const post = computed(() => getPostBySlug(slug.value));
 
 useSeoMeta({
-  title: () => (post.value ? `${post.value.title} — Blog` : 'Article Not Found'),
-  description: () => post.value?.excerpt ?? 'Blog article'
-})
+  title: () =>
+    post.value ? `${post.value.title} — Blog` : "Article Not Found",
+  description: () => post.value?.excerpt ?? "Blog article",
+});
 </script>
 
 <template>
@@ -23,7 +24,7 @@ useSeoMeta({
       container: 'max-w-3xl',
       header: 'items-start text-left',
       title: 'text-zinc-50 font-medium tracking-tight',
-      description: 'text-zinc-400 font-mono text-xs'
+      description: 'text-zinc-400 font-mono text-xs',
     }"
   >
     <template #headline>
@@ -78,7 +79,7 @@ useSeoMeta({
       container: 'max-w-3xl',
       header: 'items-start text-left',
       title: 'text-zinc-50',
-      description: 'text-zinc-400'
+      description: 'text-zinc-400',
     }"
   >
     <template #headline>

@@ -16,15 +16,16 @@ const navItems: readonly NavItem[] = [
 <template>
   <header class="site-header">
     <div class="header-inner">
-      <NuxtLink to="/" class="logo-link" aria-label="Home">
+      <NuxtLink to="/#about" class="logo-link" aria-label="Home">
         <img src="/logo.png" alt="Łukasz" class="brand-logo" />
       </NuxtLink>
 
       <nav class="nav-links" aria-label="Primary navigation">
         <NuxtLink
-          v-for="item in navItems"
+          v-for="(item, index) in navItems"
           :key="item.to"
           :to="item.to"
+          :style="{ animationDelay: `${0.15 + index * 0.1}s` }"
         >
           {{ item.label }}
         </NuxtLink>
@@ -36,6 +37,17 @@ const navItems: readonly NavItem[] = [
 <style scoped>
 @reference "~/assets/css/main.css";
 
+@keyframes navFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .site-header {
   @apply sticky top-0 z-30 w-full bg-[#0f1115]/80 backdrop-blur-md border-b border-zinc-800/70;
 }
@@ -46,6 +58,8 @@ const navItems: readonly NavItem[] = [
 
 .logo-link {
   @apply inline-flex items-center shrink-0 opacity-90 hover:opacity-100 transition-opacity;
+  opacity: 0;
+  animation: navFadeIn 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
 .brand-logo {
@@ -58,5 +72,7 @@ const navItems: readonly NavItem[] = [
 
 .nav-links a {
   @apply text-sm font-normal text-zinc-400 hover:text-zinc-50 transition-colors whitespace-nowrap;
+  opacity: 0;
+  animation: navFadeIn 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 </style>

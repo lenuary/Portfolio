@@ -1,17 +1,21 @@
 <template>
   <section id="about" class="hero-about" aria-labelledby="hero-about-title">
     <div class="hero-inner">
-      <p class="hero-kicker">Web Developer &amp; Visual Builder</p>
-      <h1 id="hero-about-title" class="hero-title">Hello, I am Łukasz</h1>
+      <p class="hero-kicker hero-fade" style="animation-delay: 0.15s">
+        Web Developer &amp; Visual Builder
+      </p>
+      <h1 id="hero-about-title" class="hero-title hero-fade" style="animation-delay: 0.3s">
+        Hello, I am Łukasz
+      </h1>
 
-      <p class="hero-description">
+      <p class="hero-description hero-fade" style="animation-delay: 0.45s">
         I'm a web developer working with Vue 3, Nuxt, TypeScript, JavaScript,
         Three.js, and Python. Alongside personal and academic software projects,
         I work with 2D and 3D tools including Photoshop, Cinema 4D, and Blender—focusing
         on clean architecture and practical web solutions.
       </p>
 
-      <div class="hero-actions">
+      <div class="hero-actions hero-fade" style="animation-delay: 0.6s">
         <UButton
           to="/#scope"
           color="neutral"
@@ -35,12 +39,28 @@
 <style scoped>
 @reference "~/assets/css/main.css";
 
+@keyframes aboutFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .hero-about {
   @apply w-full bg-transparent scroll-mt-24;
 }
 
 .hero-inner {
   @apply max-w-4xl mx-auto px-6 sm:px-10 pt-20 sm:pt-28 pb-24 flex flex-col items-center text-center;
+}
+
+.hero-fade {
+  opacity: 0;
+  animation: aboutFadeIn 0.95s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
 .hero-kicker {
