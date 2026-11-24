@@ -1,124 +1,118 @@
 <script setup lang="ts">
-const route = useRoute()
-const { getPostBySlug } = useBlog()
+const route = useRoute();
+const { getPostBySlug } = useBlog();
 
-const slug = computed(() =>
-  Array.isArray(route.params.slug) ? route.params.slug[0] : route.params.slug
-)
-const post = computed(() => getPostBySlug(slug.value))
+const slug = computed(() => String(route.params.slug ?? ""));
+const post = computed(() => getPostBySlug(slug.value));
 
 useSeoMeta({
-  title: () => (post.value ? `${post.value.title} — Blog` : 'Article Not Found'),
-  description: () => post.value?.excerpt ?? 'Blog article'
-})
+  title: () => post.value?.title ?? "Article",
+  description: () => post.value?.excerpt ?? "",
+});
+
+type ContentBlock =
+  | { type: "h2"; text: string }
+  | { type: "h3"; text: string }
+  | { type: "p"; text: string };
+
+const parsedBlocks = computed<ContentBlock[]>(() => {
+  const raw = post.value?.content ?? "";
+  if (!raw.trim()) return [];
+
+  const normalized = raw
+    .replace(/^\s*###\s+/gm, "\n\n### ")
+    .replace(/^\s*##\s+/gm, "\n\n## ");
+
+  return normalized
+    .split(/\n\s*\n/)
+    .map((chunk) => chunk.trim())
+    .filter(Boolean)
+    .map((chunk) => {
+      if (chunk.startsWith("### ")) {
+        return { type: "h3", text: chunk.replace(/^###\s+/, "") };
+      }
+      if (chunk.startsWith("## ")) {
+        return { type: "h2", text: chunk.replace(/^##\s+/, "") };
+      }
+      return { type: "p", text: chunk };
+    });
+});
 </script>
 
 <template>
-  <UPageSection
-    v-if="post"
-    :title="post.title"
-    :description="`${post.publishedAt} · ${post.readTime}`"
-    :ui="{
-      root: 'bg-transparent',
-      container: 'max-w-3xl',
-      header: 'items-start text-left',
-      title: 'text-zinc-50 font-medium tracking-tight',
-      description: 'text-zinc-400 font-mono text-xs'
-    }"
-  >
-    <template #headline>
-      <div class="post-top-nav">
-        <UButton
-          to="/blog"
-          color="neutral"
-          variant="ghost"
-          size="xs"
-          icon="i-lucide-arrow-left"
-          label="All posts"
-        />
+  <section class="mx-auto max-w-3xl px-4 pt-24 pb-24 sm:px-6">
+    <div class="mb-6">
+      <UButton
+        to="/blog"
+        color="neutral"
+        variant="ghost"
+        size="xs"
+        icon="i-lucide-arrow-left"
+        label="Back to blog"
+      />
+    </div>
 
-        <UButton
-          to="/"
-          color="neutral"
-          variant="ghost"
-          size="xs"
-          icon="i-lucide-home"
-          label="Home"
-        />
+    <article v-if="post" class="space-y-8">
+      <header class="space-y-4 border-b border-zinc-800/80 pb-7">
+        <div class="flex flex-wrap items-center gap-2.5 text-xs text-zinc-400">
+          <UBadge
+            :label="post.tag"
+            color="neutral"
+            variant="subtle"
+            size="xs"
+            class="border border-zinc-700/80 bg-zinc-900/90 text-zinc-200"
+          />
+          <span>{{ post.publishedAt }}</span>
+          <span class="text-zinc-600">•</span>
+          <span>{{ post.readTime }}</span>
+        </div>
+
+        <h1
+          class="text-3xl font-semibold tracking-tight text-zinc-50 sm:text-4xl"
+        >
+          {{ post.title }}
+        </h1>
+
+        <p class="text-base leading-relaxed text-zinc-300 sm:text-lg">
+          {{ post.excerpt }}
+        </p>
+      </header>
+
+      <div class="space-y-4 text-sm leading-7 text-zinc-300 sm:text-base">
+        <template v-for="(block, index) in parsedBlocks" :key="index">
+          <h2
+            v-if="block.type === 'h2'"
+            class="pt-5 text-xl font-semibold tracking-tight text-zinc-50 sm:text-2xl"
+          >
+            {{ block.text }}
+          </h2>
+
+          <h3
+            v-else-if="block.type === 'h3'"
+            class="pt-3 text-base font-medium text-zinc-100 sm:text-lg"
+          >
+            {{ block.text }}
+          </h3>
+
+          <p v-else class="text-zinc-300">
+            {{ block.text }}
+          </p>
+        </template>
       </div>
-    </template>
+    </article>
 
-    <article class="post-article">
-      <UBadge
-        :label="post.tag"
+    <div
+      v-else
+      class="rounded-xl border border-zinc-800 bg-zinc-950/75 p-8 text-center"
+    >
+      <p class="text-zinc-400">Article not found.</p>
+      <UButton
+        to="/blog"
         color="neutral"
         variant="outline"
-        size="sm"
-        class="self-start"
+        label="Go to blog"
+        class="mt-4"
       />
-
-      <p class="post-lead">
-        {{ post.excerpt }}
-      </p>
-
-      <USeparator />
-
-      <p class="post-body">
-        {{ post.content }}
-      </p>
-    </article>
-  </UPageSection>
-
-  <UPageSection
-    v-else
-    title="Article not found"
-    description="The requested article could not be found."
-    :ui="{
-      root: 'bg-transparent',
-      container: 'max-w-3xl',
-      header: 'items-start text-left',
-      title: 'text-zinc-50',
-      description: 'text-zinc-400'
-    }"
-  >
-    <template #headline>
-      <div class="post-top-nav">
-        <UButton
-          to="/blog"
-          icon="i-lucide-arrow-left"
-          color="neutral"
-          variant="solid"
-          label="All posts"
-        />
-
-        <UButton
-          to="/"
-          icon="i-lucide-home"
-          color="neutral"
-          variant="ghost"
-          label="Home"
-        />
-      </div>
-    </template>
-  </UPageSection>
+    </div>
+  </section>
 </template>
-
-<style scoped>
-@reference "~/assets/css/main.css";
-
-.post-top-nav {
-  @apply flex items-center gap-2;
-}
-
-.post-article {
-  @apply flex flex-col gap-5;
-}
-
-.post-lead {
-  @apply text-base sm:text-lg text-zinc-200 leading-relaxed;
-}
-
-.post-body {
-  @apply text-sm sm:text-base text-zinc-400 leading-relaxed;
-}
-</style>

@@ -23,73 +23,41 @@ const { posts } = useBlog()
         trailing-icon="i-lucide-arrow-right"
         label="All posts"
         size="xs"
-        class="text-zinc-400 hover:text-zinc-100 px-0"
+        class="px-0 text-zinc-400 hover:text-zinc-100"
       />
     </template>
 
-    <div class="articles-list">
+    <div class="flex flex-col">
       <article
         v-for="post in posts"
         :key="post.slug"
-        class="article-row group"
+        class="group flex flex-col items-start gap-1 border-b border-zinc-800/70 py-5 first:pt-1 last:border-b-0 last:pb-1"
       >
-        <time class="article-date">
+        <span class="text-xs font-normal text-zinc-500">
           {{ post.publishedAt }}
-        </time>
+        </span>
 
-        <h3 class="article-title">
+        <h3 class="text-base font-medium leading-snug text-zinc-100 transition-colors group-hover:text-white sm:text-lg">
           <NuxtLink :to="`/blog/${post.slug}`">
             {{ post.title }}
           </NuxtLink>
         </h3>
 
-        <p class="article-excerpt">
+        <p class="mt-0.5 max-w-2xl text-xs leading-relaxed text-zinc-400 sm:text-sm">
           {{ post.excerpt }}
         </p>
 
-        <div class="article-cta">
+        <div class="mt-1.5">
           <UButton
             :to="`/blog/${post.slug}`"
             color="neutral"
             variant="link"
             label="Read Article"
             size="xs"
-            class="read-link"
+            class="px-0 py-0 text-xs font-normal text-zinc-300 underline-offset-4 hover:text-white group-hover:underline"
           />
         </div>
       </article>
     </div>
   </UPageSection>
 </template>
-
-<style scoped>
-@reference "~/assets/css/main.css";
-
-.articles-list {
-  @apply flex flex-col divide-y divide-zinc-800/70;
-}
-
-.article-row {
-  @apply py-5 first:pt-1 last:pb-1 flex flex-col items-start gap-1;
-}
-
-.article-date {
-  @apply text-xs text-zinc-500 font-normal;
-}
-
-.article-title {
-  @apply text-base sm:text-lg font-medium text-zinc-100 group-hover:text-white transition-colors leading-snug;
-}
-
-.article-excerpt {
-  @apply text-xs sm:text-sm text-zinc-400 leading-relaxed max-w-2xl mt-0.5;
-}
-
-.article-cta {
-  @apply mt-1.5;
-}
-
-.read-link {
-  @apply px-0 py-0 text-xs font-normal text-zinc-300 hover:text-white underline-offset-4 group-hover:underline;
-}
-</style>

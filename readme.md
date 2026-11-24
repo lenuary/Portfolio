@@ -2,6 +2,8 @@
 
 Minimalist, dark monochrome developer portfolio featuring interactive project case studies and a technical blog.
 
+LIVE: https://lenyportfolio.vercel.app/
+
 ## Tech Stack
 
 - **Framework:** Nuxt / Vue 3

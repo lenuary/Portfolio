@@ -1,4 +1,5 @@
 <script setup lang="ts">
+
 const route = useRoute()
 const { projects, getProjectBySlug } = useProjects()
 
@@ -35,49 +36,49 @@ useSeoMeta({
     }"
   >
     <template #headline>
-      <div class="project-top-nav">
-        <UButton color="neutral" icon="i-lucide-arrow-left" label="All projects" size="xs" to="/projects" variant="ghost"/>
+      <div class="flex items-center gap-2">
+        <UButton color="neutral" icon="i-lucide-arrow-left" label="All projects" size="xs" to="/projects" variant="ghost" />
 
-        <UButton color="neutral" icon="i-lucide-home" label="Home" size="xs" to="/" variant="ghost"/>
+        <UButton color="neutral" icon="i-lucide-home" label="Home" size="xs" to="/" variant="ghost" />
       </div>
     </template>
 
-    <div class="project-preview-frame">
+    <div class="mb-8 aspect-video w-full overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-950">
       <img
         :src="project.image"
         :alt="project.title"
-        class="project-preview-img"
+        class="size-full object-cover"
       />
     </div>
 
-    <div class="project-layout">
-      <article class="project-main">
-        <p class="project-lead">
+    <div class="grid grid-cols-1 items-start gap-8 lg:grid-cols-12">
+      <article class="flex flex-col gap-7 lg:col-span-8">
+        <p class="text-base leading-relaxed text-zinc-200 sm:text-lg">
           {{ project.details }}
         </p>
 
         <section
           v-for="section in project.sections"
           :key="section.heading"
-          class="project-section"
+          class="flex flex-col gap-3"
         >
-          <h2 class="project-section-heading">
+          <h2 class="text-lg font-medium tracking-tight text-zinc-100">
             {{ section.heading }}
           </h2>
           <p
             v-for="paragraph in section.paragraphs"
             :key="paragraph"
-            class="project-paragraph"
+            class="text-sm leading-relaxed text-zinc-400 sm:text-base"
           >
             {{ paragraph }}
           </p>
         </section>
 
-        <USeparator/>
+        <USeparator />
 
-        <section class="project-section">
-          <h2 class="project-section-heading">Key deliverables</h2>
-          <ul class="project-highlights">
+        <section class="flex flex-col gap-3">
+          <h2 class="text-lg font-medium tracking-tight text-zinc-100">Key deliverables</h2>
+          <ul class="list-inside list-disc space-y-2 text-sm text-zinc-300">
             <li v-for="item in project.highlights" :key="item">
               {{ item }}
             </li>
@@ -85,49 +86,17 @@ useSeoMeta({
         </section>
       </article>
 
-      <aside class="project-sidebar">
-        <UPageCard :ui="{
-            root: 'bg-zinc-950/75 border-zinc-800/80 backdrop-blur-md rounded-xl'
-          }" variant="outline">
-          <div class="sidebar-stack">
-            <div class="sidebar-actions">
-              <UButton :to="project.liveUrl" block color="neutral" label="Visit project" rel="noopener noreferrer" target="_blank" trailing-icon="i-lucide-arrow-up-right" v-if="project.liveUrl" variant="solid"/>
-
-              <UButton :to="project.githubUrl" block color="neutral" icon="i-lucide-github" label="Source code" rel="noopener noreferrer" target="_blank" v-if="project.githubUrl" variant="outline"/>
-            </div>
-
-            <USeparator/>
-
-            <dl class="sidebar-meta">
-              <div v-if="project.role" class="meta-row">
-                <dt>Role</dt>
-                <dd>{{ project.role }}</dd>
-              </div>
-              <div v-if="project.timeline" class="meta-row">
-                <dt>Year</dt>
-                <dd>{{ project.timeline }}</dd>
-              </div>
-              <div v-if="project.status" class="meta-row">
-                <dt>Status</dt>
-                <dd>{{ project.status }}</dd>
-              </div>
-            </dl>
-
-            <USeparator/>
-
-            <div class="sidebar-tech">
-              <span class="sidebar-label">Tech stack</span>
-              <div class="sidebar-badges">
-                <UBadge :key="tech" :label="tech" class="project-tech-badge" color="neutral" size="xs" v-for="tech in project.stack" variant="outline"/>
-              </div>
-            </div>
-          </div>
-        </UPageCard>
-      </aside>
+      <ProjectSidebar :project="project" />
     </div>
 
-    <div v-if="nextProject" class="project-next">
-      <UButton :label="`Next project: ${nextProject.title}`" :to="`/projects/${nextProject.slug}`" color="neutral" trailing-icon="i-lucide-arrow-right" variant="ghost"/>
+    <div v-if="nextProject" class="mt-10 flex justify-end border-t border-zinc-800/80 pt-6">
+      <UButton
+        :label="`Next project: ${nextProject.title}`"
+        :to="`/projects/${nextProject.slug}`"
+        color="neutral"
+        trailing-icon="i-lucide-arrow-right"
+        variant="ghost"
+      />
     </div>
   </UPageSection>
 
@@ -145,103 +114,11 @@ useSeoMeta({
     title="Project not found"
   >
     <template #headline>
-      <div class="project-top-nav">
-        <UButton color="neutral" icon="i-lucide-arrow-left" label="All projects" to="/projects" variant="solid"/>
+      <div class="flex items-center gap-2">
+        <UButton color="neutral" icon="i-lucide-arrow-left" label="All projects" to="/projects" variant="solid" />
 
-        <UButton color="neutral" icon="i-lucide-home" label="Home" to="/" variant="ghost"/>
+        <UButton color="neutral" icon="i-lucide-home" label="Home" to="/" variant="ghost" />
       </div>
     </template>
   </UPageSection>
 </template>
-
-<style scoped>
-@reference "~/assets/css/main.css";
-
-.project-top-nav {
-  @apply flex items-center gap-2;
-}
-
-.project-preview-frame {
-  @apply aspect-video w-full overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-950 mb-8;
-}
-
-.project-preview-img {
-  @apply size-full object-cover;
-}
-
-.project-layout {
-  @apply grid grid-cols-1 lg:grid-cols-12 gap-8 items-start;
-}
-
-.project-main {
-  @apply lg:col-span-8 flex flex-col gap-7;
-}
-
-.project-lead {
-  @apply text-base sm:text-lg text-zinc-200 leading-relaxed;
-}
-
-.project-section {
-  @apply flex flex-col gap-3;
-}
-
-.project-section-heading {
-  @apply text-lg font-medium text-zinc-100 tracking-tight;
-}
-
-.project-paragraph {
-  @apply text-sm sm:text-base text-zinc-400 leading-relaxed;
-}
-
-.project-highlights {
-  @apply list-disc list-inside space-y-2 text-sm text-zinc-300;
-}
-
-.project-sidebar {
-  @apply lg:col-span-4 lg:sticky lg:top-24;
-}
-
-.sidebar-stack {
-  @apply flex flex-col gap-4;
-}
-
-.sidebar-actions {
-  @apply flex flex-col gap-2.5;
-}
-
-.sidebar-meta {
-  @apply flex flex-col gap-2.5 text-sm;
-}
-
-.meta-row {
-  @apply flex items-center justify-between gap-2;
-}
-
-.meta-row dt {
-  @apply text-zinc-500;
-}
-
-.meta-row dd {
-  @apply text-zinc-200 font-medium;
-}
-
-.sidebar-tech {
-  @apply flex flex-col gap-2;
-}
-
-.sidebar-label {
-  @apply text-xs uppercase tracking-wider text-zinc-500;
-}
-
-.sidebar-badges {
-  @apply flex flex-wrap gap-1.5;
-}
-
-.project-tech-badge {
-  @apply border-zinc-800 bg-zinc-900/70 text-zinc-300;
-}
-
-.project-next {
-  @apply flex justify-end mt-10 pt-6 border-t border-zinc-800/80;
-}
-</style>

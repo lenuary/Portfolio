@@ -43,51 +43,19 @@ const areas: readonly WorkArea[] = [
       description: 'text-zinc-400'
     }"
   >
-    <UPageGrid class="work-grid">
-      <UPageCard
+    <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
+      <div
         v-for="area in areas"
         :key="area.title"
-        :title="area.title"
-        :description="area.description"
-        :icon="area.icon"
-        variant="outline"
-        :ui="{
-          root: 'bg-zinc-950/65 border-zinc-800/80 hover:border-zinc-700 transition-colors backdrop-blur-sm',
-          leadingIcon: 'text-zinc-300 size-5',
-          title: 'text-zinc-100 font-medium',
-          description: 'text-zinc-400 text-sm leading-relaxed'
-        }"
+        class="flex justify-center"
       >
-        <template #footer>
-          <div class="work-tags">
-            <UBadge
-              v-for="tag in area.tags"
-              :key="tag"
-              :label="tag"
-              color="neutral"
-              variant="outline"
-              size="xs"
-              class="work-badge"
-            />
-          </div>
-        </template>
-      </UPageCard>
-    </UPageGrid>
+        <serviceCard
+          :title="area.title"
+          :description="area.description"
+          :icon="area.icon"
+          :tags="area.tags"
+        />
+      </div>
+    </div>
   </UPageSection>
 </template>
-
-<style scoped>
-@reference "~/assets/css/main.css";
-
-.work-grid {
-  @apply grid-cols-1 md:grid-cols-3 gap-5;
-}
-
-.work-tags {
-  @apply flex flex-wrap gap-1.5;
-}
-
-.work-badge {
-  @apply border-zinc-800 bg-zinc-900/70 text-zinc-300 font-normal;
-}
-</style>
