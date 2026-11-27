@@ -1,8 +1,36 @@
 @import "tailwindcss";
 @import "@nuxt/ui";
 
+:root {
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+}
+
 html {
   scroll-behavior: smooth;
+}
+
+/* Scope of work: one-time staggered entrance (transitions, so it's interruptible) */
+.scope-item {
+  transition:
+    opacity 400ms var(--ease-out),
+    transform 400ms var(--ease-out);
+  transition-delay: var(--stagger, 0ms);
+}
+
+.scope-grid[data-pending] .scope-item {
+  opacity: 0;
+  transform: translateY(14px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scope-item {
+    transition: opacity 200ms ease;
+    transition-delay: 0ms;
+  }
+
+  .scope-grid[data-pending] .scope-item {
+    transform: none;
+  }
 }
 
 @keyframes navFadeIn {
